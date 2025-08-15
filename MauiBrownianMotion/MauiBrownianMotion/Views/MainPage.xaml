@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MauiBrownianMotion"
+             xmlns:viewmodel="clr-namespace:MauiBrownianMotion.ViewModels"
+             x:Class="MauiBrownianMotion.MainPage"
+             Title="Brownian Motion"
+             BackgroundColor="{AppThemeBinding Light=White, Dark=#181824}">
+    <ContentPage.BindingContext>
+        <viewmodel:MainViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="*"
+          ColumnDefinitions="2*,3*"
+          Padding="32">
+        <!-- Gráfico à esquerda -->
+        <Frame Grid.Column="0"
+               CornerRadius="16"
+               BackgroundColor="#232336"
+               Padding="0"
+               HasShadow="False"
+               VerticalOptions="Center"
+               HeightRequest="420"
+               WidthRequest="420">
+            <GraphicsView x:Name="GraphicsView"
+                          Drawable="{Binding BrownianDrawable}"
+                          HeightRequest="400"
+                          WidthRequest="400"/>
+        </Frame>
+
+        <!-- Controles à direita -->
+        <VerticalStackLayout Grid.Column="1"
+                             Padding="32,0"
+                             Spacing="18"
+                             VerticalOptions="Center">
+            <Label Text="Exemplo entrevista"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   Margin="0,0,0,24"/>
+
+            <Label Text="Preço inicial"
+                   TextColor="White"/>
+            <Entry Text="{Binding InitialPrice}"
+                   Keyboard="Numeric"
+                   BackgroundColor="#232336"
+                   TextColor="White"
+                   PlaceholderColor="#888"/>
+
+            <Label Text="Volatilidade média(%)"
+                   TextColor="White"/>
+            <Entry Text="{Binding Volatility}"
+                   Keyboard="Numeric"
+                   BackgroundColor="#232336"
+                   TextColor="White"
+                   PlaceholderColor="#888"/>
+
+            <Label Text="Retorno médio(%)"
+                   TextColor="White"/>
+            <Entry Text="{Binding Mean}"
+                   Keyboard="Numeric"
+                   BackgroundColor="#232336"
+                   TextColor="White"
+                   PlaceholderColor="#888"/>
+
+            <Label Text="Tempo(dias)"
+                   TextColor="White"/>
+            <Entry Text="{Binding TimeDays}"
+                   Keyboard="Numeric"
+                   BackgroundColor="#232336"
+                   TextColor="White"
+                   PlaceholderColor="#888"/>
+
+            <Button Text="Gerar simulação"
+                    Command="{Binding GenerateSimulationCommand}"
+                    IsEnabled="{Binding IsNotBusy}"
+                    BackgroundColor="White"
+                    TextColor="#232336"
+                    FontAttributes="Bold"
+                    Margin="0,24,0,0"
+                    Clicked="Button_Clicked"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
+
