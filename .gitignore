@@ -1,0 +1,64 @@
+# .gitignore for .NET MAUI project
+
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio
+.vs/
+
+# Mac build results
+*.app
+*.xcarchive
+
+# Windows build results
+*.exe
+*.dll
+*.appx
+*.appxbundle
+*.msix
+*.msixbundle
+*.msi
+*.pdb
+*.cache
+*.db
+*.db-shm
+*.db-wal
+
+# iOS build results
+*.ipa
+
+# Android build results
+*.apk
+*.apks
+*.aab
+
+# Maui generated files
+MauiProgram.csproj.nuget.g.props
+MauiProgram.csproj.nuget.g.targets
+project.assets.json
+project.nuget.cache
+
+# Logs
+*.log
+
+# Others
+.DS_Store
+Thumbs.db
+
+# Rider
+.idea/
+*.sln.iml
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
