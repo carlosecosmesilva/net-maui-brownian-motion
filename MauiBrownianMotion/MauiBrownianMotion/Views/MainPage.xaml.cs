@@ -5,28 +5,25 @@ namespace MauiBrownianMotion
 {
     public partial class MainPage : ContentPage
     {
+        private readonly BrownianMotionDrawable _drawable;
+
         public MainPage(MainViewModel viewModel)
         {
             InitializeComponent();
             BindingContext = viewModel;
 
             // Configuração do Drawable
-            var drawable = new BrownianMotionDrawable();
-            GraphicsView.Drawable = drawable;
+            _drawable = new BrownianMotionDrawable();
+            GraphicsView.Drawable = _drawable;
 
             viewModel.PropertyChanged += (s, e) =>
             {
                 if (e.PropertyName == nameof(MainViewModel.SimulationResults))
                 {
-                    drawable.SimulationResults = viewModel.SimulationResults.ToList();
+                    _drawable.SimulationResults = viewModel.SimulationResults.ToList();
                     GraphicsView.Invalidate();
                 }
             };
-        }
-
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -6,80 +6,70 @@
              x:Class="MauiBrownianMotion.MainPage"
              Title="Brownian Motion"
              BackgroundColor="{AppThemeBinding Light=White, Dark=#181824}">
-    <ContentPage.BindingContext>
-        <viewmodel:MainViewModel/>
-    </ContentPage.BindingContext>
 
     <Grid RowDefinitions="*"
           ColumnDefinitions="2*,3*"
           Padding="32">
         <!-- Gráfico à esquerda -->
-        <Frame Grid.Column="0"
-               CornerRadius="16"
-               BackgroundColor="#232336"
-               Padding="0"
-               HasShadow="False"
-               VerticalOptions="Center"
-               HeightRequest="420"
-               WidthRequest="420">
+        <Border Grid.Column="0"
+                BackgroundColor="#232336"
+                Padding="0"
+                VerticalOptions="Fill"
+                HorizontalOptions="Fill">
             <GraphicsView x:Name="GraphicsView"
-                          Drawable="{Binding BrownianDrawable}"
-                          HeightRequest="400"
-                          WidthRequest="400"/>
-        </Frame>
+                          VerticalOptions="Fill"
+                          HorizontalOptions="Fill"/>
+        </Border>
 
         <!-- Controles à direita -->
-        <VerticalStackLayout Grid.Column="1"
-                             Padding="32,0"
-                             Spacing="18"
-                             VerticalOptions="Center">
-            <Label Text="Exemplo entrevista"
-                   FontSize="28"
-                   FontAttributes="Bold"
-                   TextColor="White"
-                   Margin="0,0,0,24"/>
+        <ScrollView Grid.Column="1"
+                    VerticalOptions="Fill"
+                    HorizontalOptions="Fill">
+            <VerticalStackLayout Padding="32,0"
+                                 Spacing="18"
+                                 VerticalOptions="Center"
+                                 HorizontalOptions="Fill">
+                <Label Text="Preço inicial"
+                       TextColor="White"/>
+                <Entry Text="{Binding InitialPrice}"
+                       Keyboard="Numeric"
+                       BackgroundColor="#232336"
+                       TextColor="White"
+                       PlaceholderColor="#888"/>
 
-            <Label Text="Preço inicial"
-                   TextColor="White"/>
-            <Entry Text="{Binding InitialPrice}"
-                   Keyboard="Numeric"
-                   BackgroundColor="#232336"
-                   TextColor="White"
-                   PlaceholderColor="#888"/>
+                <Label Text="Volatilidade média(%)"
+                       TextColor="White"/>
+                <Entry Text="{Binding Volatility}"
+                       Keyboard="Numeric"
+                       BackgroundColor="#232336"
+                       TextColor="White"
+                       PlaceholderColor="#888"/>
 
-            <Label Text="Volatilidade média(%)"
-                   TextColor="White"/>
-            <Entry Text="{Binding Volatility}"
-                   Keyboard="Numeric"
-                   BackgroundColor="#232336"
-                   TextColor="White"
-                   PlaceholderColor="#888"/>
+                <Label Text="Retorno médio(%)"
+                       TextColor="White"/>
+                <Entry Text="{Binding Mean}"
+                       Keyboard="Numeric"
+                       BackgroundColor="#232336"
+                       TextColor="White"
+                       PlaceholderColor="#888"/>
 
-            <Label Text="Retorno médio(%)"
-                   TextColor="White"/>
-            <Entry Text="{Binding Mean}"
-                   Keyboard="Numeric"
-                   BackgroundColor="#232336"
-                   TextColor="White"
-                   PlaceholderColor="#888"/>
+                <Label Text="Tempo(dias)"
+                       TextColor="White"/>
+                <Entry Text="{Binding TimeDays}"
+                       Keyboard="Numeric"
+                       BackgroundColor="#232336"
+                       TextColor="White"
+                       PlaceholderColor="#888"/>
 
-            <Label Text="Tempo(dias)"
-                   TextColor="White"/>
-            <Entry Text="{Binding TimeDays}"
-                   Keyboard="Numeric"
-                   BackgroundColor="#232336"
-                   TextColor="White"
-                   PlaceholderColor="#888"/>
-
-            <Button Text="Gerar simulação"
-                    Command="{Binding GenerateSimulationCommand}"
-                    IsEnabled="{Binding IsNotBusy}"
-                    BackgroundColor="White"
-                    TextColor="#232336"
-                    FontAttributes="Bold"
-                    Margin="0,24,0,0"
-                    Clicked="Button_Clicked"/>
-        </VerticalStackLayout>
+                <Button Text="Gerar simulação"
+                        Command="{Binding GenerateSimulationCommand}"
+                        IsEnabled="{Binding IsNotBusy}"
+                        BackgroundColor="White"
+                        TextColor="#232336"
+                        FontAttributes="Bold"
+                        Margin="0,24,0,0"/>
+            </VerticalStackLayout>
+        </ScrollView>
     </Grid>
 </ContentPage>
 

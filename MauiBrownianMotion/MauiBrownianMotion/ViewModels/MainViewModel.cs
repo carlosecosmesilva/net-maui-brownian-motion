@@ -52,17 +52,21 @@ namespace MauiBrownianMotion.ViewModels
                 return;
 
             IsBusy = true;
-            SimulationResults.Clear();
+            var results = new List<double[]>();
 
             try
             {
+                // Converte para decimal se o usuário digitar em porcentagem (ex: 20 -> 0.2)
+                double sigma = Volatility > 1 ? Volatility / 100.0 : Volatility;
+                double mean = Mean > 1 ? Mean / 100.0 : Mean;
+
                 for (int i = 0; i < SimulationCount; i++)
                 {
                     var result = BrownianMotionModel.GenerateBrownianMotion(
-                        Volatility, Mean, InitialPrice, TimeDays);
-
-                    SimulationResults.Add(result);
+                        sigma, mean, InitialPrice, TimeDays);
+                    results.Add(result);
                 }
+                SimulationResults = new ObservableCollection<double[]>(results);
             }
             finally
             {

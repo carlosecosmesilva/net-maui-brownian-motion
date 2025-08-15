@@ -28,6 +28,12 @@ namespace MauiBrownianMotion.Views.Controls
 
             double maxPrice = SimulationResults.Max(s => s.Max());
             double minPrice = SimulationResults.Min(s => s.Min());
+            // Evita divisão por zero
+            if (Math.Abs(maxPrice - minPrice) < 1e-8)
+            {
+                maxPrice += 1;
+                minPrice -= 1;
+            }
 
             DrawReferenceLines(canvas, dirtyRect, maxPrice, minPrice);
 
@@ -35,18 +41,18 @@ namespace MauiBrownianMotion.Views.Controls
             for (int i = 0; i < SimulationResults.Count; i++)
             {
                 var results = SimulationResults[i];
-                var color = LineColors[i % LineColors.Length];
+                var color = Colors.MediumPurple; // cor visível no fundo escuro
 
-                canvas.StrokeColor = LineColors[i % LineColors.Length];
-                canvas.StrokeSize = 2;
+                canvas.StrokeColor = color;
+                canvas.StrokeSize = 2.5f;
 
                 var points = new PointF[results.Length];
 
                 for (int j = 0; j < results.Length; j++)
                 {
                     float x = 40 + (j * (dirtyRect.Width - 50) / (results.Length - 1));
-                    float y = (float)(dirtyRect.Height - 40 
-                        - ((results[j] - minPrice) / (maxPrice - minPrice)) * (dirtyRect.Height - 50)); 
+                    float y = (float)(dirtyRect.Height - 40
+                        - ((results[j] - minPrice) / (maxPrice - minPrice)) * (dirtyRect.Height - 50));
                     points[j] = new PointF(x, y);
                 }
 
@@ -66,7 +72,26 @@ namespace MauiBrownianMotion.Views.Controls
 
         private void DrawReferenceLines(ICanvas canvas, RectF dirtyRect, double maxPrice, double minPrice)
         {
-            throw new NotImplementedException();
+            // Desenha 5 linhas de referência horizontais (inclusive topo e base)
+            int numLines = 5;
+            float left = 40;
+            float right = (float)dirtyRect.Width - 10;
+            float top = 10;
+            float bottom = (float)dirtyRect.Height - 40;
+
+            canvas.StrokeColor = Colors.Gray;
+            canvas.StrokeSize = 0.5f;
+            canvas.FontColor = Colors.Gray;
+            canvas.FontSize = 12;
+
+            for (int i = 0; i < numLines; i++)
+            {
+                float y = bottom - i * (bottom - top) / (numLines - 1);
+                double price = minPrice + (maxPrice - minPrice) * i / (numLines - 1);
+                canvas.DrawLine(left, y, right, y);
+                // Desenha o valor do preço ao lado do eixo Y
+                canvas.DrawString(price.ToString("F2"), 2, y - 8, 38, 16, HorizontalAlignment.Right, VerticalAlignment.Center);
+            }
         }
         #endregion
     }

@@ -19,11 +19,11 @@ namespace MauiBrownianMotion
                 });
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
-            builder.Services.AddSingleton<MainPage>();
             builder.Services.AddTransient<MainViewModel>();
             builder.Services.AddSingleton<BrownianMotionModel>();
+            builder.Services.AddSingleton<MainPage>(s => new MainPage(s.GetRequiredService<MainViewModel>()));
             return builder.Build();
         }
     }
